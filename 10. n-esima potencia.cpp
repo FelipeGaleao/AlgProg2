@@ -21,7 +21,7 @@ int potR(int x, int n){
     if(n == 0){
         return 1;
     }else if(n > 1){
-        return (x * pot(x, n-1));
+        return (x * potR(x, n-1));
     }
 }
 
@@ -33,6 +33,7 @@ void calcular(void){
     printf("O resultado sem RECURSIVIDADE sera: \n %d \n", pot(valor_x, valor_n));
     printf("O resultado com RECURSIVIDADE sera: \n %d \n", potR(valor_x, valor_n));
 }
+
 
 int main(){
 
