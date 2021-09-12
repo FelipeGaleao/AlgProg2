@@ -13,6 +13,7 @@ int potencia(int x, int n) {
 }
 
 int main() {
+    printf("teste");
     int x, n;
     scanf("%d %d", &x, &n);
     printf("%d", potencia(x, n));
