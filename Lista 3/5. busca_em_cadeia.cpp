@@ -31,7 +31,7 @@ int recursive_binary_search(Aluno Alunos[1000], int begin, int end, int item) {
   if (Alunos[i].numero_aluno < item) { /* Item está no sub-vetor à direita */
     return recursive_binary_search(Alunos, i + 1, end, item);
 
-  } else { /* vector[i] > item. Item está no sub-vetor à esquerda */
+  } else { /* Alunos[i] > item. Item está no sub-vetor à esquerda */
     return recursive_binary_search(Alunos, begin, i - 1, item);
   }
 }
