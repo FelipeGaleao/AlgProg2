@@ -48,10 +48,14 @@ bool checkPalindromo(char string[MAX_PALAVRAS][MAX_CARACTERES],
       } else {
         CheckPalindromo = false;
       }
+    } else if (indice_a > tamanho_string) {
+      CheckPalindromo = false;
     }
   }
-  if (indice_a == tamanho_string && CheckPalindromo == true){
-      return true;
+  if (indice_a == true) {
+    return true;
+  } else {
+    return false;
   }
 }
 void verificar_palindromo(char palavras[MAX_PALAVRAS][MAX_CARACTERES],
