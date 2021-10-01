@@ -18,9 +18,7 @@ int recursive_binary_search(Aluno Alunos[MAX], int begin, int end,
   }
 
   if (Alunos[i].numero_aluno == numeroAluno) { /* Item encontrado */
-    for (int j = 0; j <= 21 && Alunos[i].nome[j] != '\0'; j++) {
-      printf("%c", Alunos[i].nome[j]);
-    }
+    printf("%s\n", Alunos[i].nome);
     return 1;
   }
 
@@ -40,18 +38,18 @@ void lerAlunos(int qtdAlunos, Aluno Alunos[MAX]) {
   }
 }
 
-
 void buscarAluno(int qtdBuscas, Aluno Alunos[MAX], int qtdAlunos) {
-  int numerosAluno[qtdBuscas];
+  int numerosAluno[1000];
   int resultadoBusca;
   for (int i = 0; i < qtdBuscas; i++) {
     scanf("%i", &numerosAluno[i]);
   }
   for (int i = 0; i < qtdBuscas; i++) {
-    resultadoBusca = recursive_binary_search(Alunos, 0, qtdAlunos, numerosAluno[i]);
-    if(resultadoBusca != 1){
-      printf("%s", "\nnao encontrado");
-      break;
+    resultadoBusca =
+        recursive_binary_search(Alunos, 0, qtdAlunos, numerosAluno[i]);
+    if (resultadoBusca != 1) {
+      printf("nao encontrado");
+      printf("\n");
     }
   }
 }
@@ -63,8 +61,8 @@ int main() {
 
   scanf("%i", &qtdAlunos);
   lerAlunos(qtdAlunos, Alunos);
+ 
   scanf("%i", &qtdBuscas);
-
   buscarAluno(qtdBuscas, Alunos, qtdAlunos);
 
   return 0;
