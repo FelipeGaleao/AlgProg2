@@ -43,10 +43,10 @@ int separa(int p, int r, Estudante v[MAX], char opcao) {
       }
     }
     if (opcao == 'n') {
-      if (v[i].nome <= pivotEstudante.nome) {
+        if (v[i].nome[0] < pivotEstudante.nome[0]) {
         troca(v[i], v[q]);
         q++;
-      }
+     }
     }
     if (opcao == 'm') {
       if (v[i].media <= pivot) {
