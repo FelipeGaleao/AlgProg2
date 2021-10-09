@@ -28,12 +28,18 @@ void ler_estudantes(int qtdAlunos, Estudante Estudantes[MAX]) {
 
 int main() {
 
-  int qtdAlunos;
+  int qtdAlunos, qtdBuscas;
+  char opcao;
   Estudante Estudantes[MAX];
 
   scanf("%d", &qtdAlunos);
 
   ler_estudantes(qtdAlunos, Estudantes);
+
+  scanf(" %c", &opcao);
+  scanf("%d", &qtdBuscas);
+
+  s
 
   return 0;
 }
