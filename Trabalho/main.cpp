@@ -9,9 +9,52 @@ struct Estudante {
 
 /* Buscas */
 
-int buscaRGA(Estudante v[], int n, int RGA);
-int buscaNome(Estudante v[], int n, char nome[]);
-int buscaMedia(Estudante v[], int n, double media);
+int buscaRGA(Estudante v[], int n, int RGA) {
+  int esq, dir, meio;
+  esq = -1;
+  dir = n;
+  while (esq < dir - 1) {
+    meio = (esq + dir) / 2;
+    if (v[meio].RGA < RGA)
+      esq = meio;
+    else
+      dir = meio;
+  }
+  return dir;
+}
+
+int buscaNome(Estudante v[], int n, char nome[]) {
+  int inicio = 0;
+  int fim = n - 1;
+  int meio;
+  int j = 0;
+  while (inicio <= fim) {
+    meio = (inicio + fim) / 2;
+    if (nome[j] == v[meio].nome[j])
+      return meio;
+    else if (nome[j] < v[meio].nome[j])
+      fim = meio - 1;
+    else if (nome[j] > v[meio].nome[j])
+      inicio = meio + 1;
+  }
+  return -1;
+}
+int buscaMedia(Estudante v[], int n, double media) {
+  int inicio = 0;
+  int fim = n - 1;
+  int meio;
+
+  while (inicio <= fim) {
+    meio = (inicio + fim) / 2;
+    if (media == v[meio].media)
+      return meio;
+    else if (media < v[meio].media)
+      fim = meio - 1;
+    else if (media > v[meio].media)
+      inicio = meio + 1;
+  }
+  return -1;
+}
 
 void troca(Estudante &a, Estudante &b) {
   Estudante tmp = a;
@@ -22,10 +65,12 @@ void troca(Estudante &a, Estudante &b) {
 int separa(int p, int r, Estudante v[MAX], char opcao) {
 
   char pivot;
+  int pivotRGA;
+  float pivotMedia;
   Estudante pivotEstudante;
 
   if (opcao == 'r') {
-    pivot = v[r].RGA;
+    pivotRGA = v[r].RGA;
   }
   if (opcao == 'n') {
     pivotEstudante = v[r];
@@ -37,19 +82,45 @@ int separa(int p, int r, Estudante v[MAX], char opcao) {
 
   for (int i = p; i < r; i++) {
     if (opcao == 'r') {
-      if (v[i].RGA <= pivot) {
+      if (v[i].RGA <= pivotRGA) {
         troca(v[i], v[q]);
         q++;
       }
     }
+
     if (opcao == 'n') {
-        if (v[i].nome[0] < pivotEstudante.nome[0]) {
+      int k;
+      for (k = 0;
+           v[i].nome[k] == pivotEstudante.nome[k] && v[i].nome[k] == '\0'; k++)
+        ;
+
+      if (v[i].nome[k] <= pivotEstudante.nome[k]) {
         troca(v[i], v[q]);
         q++;
-     }
+        // troca(v[i], v[q]);
+        // printf("\n str1 is Less than str2");
+      } else if (v[i].nome[k] > pivotEstudante.nome[k]) {
+        // troca(v[q], v[i]);
+        // q++;
+        // troca(v[i], v[q]);
+      } else {
+        // printf("\n str1 is Equal to str2");
+      }
+
+      // if (v[i].nome[0] <= pivotEstudante.nome[0]) {
+      //   troca(v[i], v[q]);
+      //   q++;
+      // }
+      // if (v[i].nome[0] == pivotEstudante.nome[0]) {
+      // if (v[i].nome < pivotEstudante.nome) {
+      //   printf("teste");
+      //   troca(v[i], v[q]);
+      //   q++;
+      // }
     }
+    // }
     if (opcao == 'm') {
-      if (v[i].media <= pivot) {
+      if (v[i].media <= pivotMedia) {
         troca(v[i], v[q]);
         q++;
       }
@@ -58,18 +129,38 @@ int separa(int p, int r, Estudante v[MAX], char opcao) {
   troca(v[q], v[r]);
   return q;
 }
-
 void quicksort(int p, int r, Estudante v[MAX], char opcao) {
   int q;
   if (p < r) {
-    q = separa(p, r, v, opcao);
-    q = separa(p, r, v, opcao);
+    if (opcao == 'n') {
+      q = separa(p, r, v, opcao);
+      // q = separa(p, r, v, opcao);
+      // q = separa(p, r, v, opcao);
+      // q = separa(p, r, v, opcao);
+
+    } else {
+      q = separa(p, r, v, opcao);
+      q = separa(p, r, v, opcao);
+    }
+    // q = separa(p, r, v, opcao);
+    // q = separa(p, r, v, opcao);
     quicksort(p, q - 1, v, opcao);
     quicksort(q + 1, r, v, opcao);
   }
 }
-
-void imprimeEstudante(Estudante v[], int k);
+void imprimeEstudante(Estudante v[], int k) {
+  if (k < 0) {
+    printf("RGA: null \n");
+    printf("Nome: null \n");
+    printf("Media: null \n");
+    printf("------------ \n");
+  } else {
+    printf("RGA: %d \n", v[k].RGA);
+    printf("Nome: %s \n", v[k].nome);
+    printf("Media: %.2lf \n", v[k].media);
+    printf("------------ \n");
+  }
+};
 void imprimeEstudantes(Estudante v[], int n) {
   for (int i = 0; i < n; i++) {
     printf("RGA: %d \n", v[i].RGA);
@@ -87,6 +178,10 @@ void ler_estudantes(int qtdAlunos, Estudante Estudantes[MAX]) {
   }
 }
 
+void ordenaEstudantes(Estudante v[], int n, char op) {
+  quicksort(0, n - 1, v, op);
+}
+
 int main() {
 
   int qtdAlunos, qtdBuscas;
@@ -96,11 +191,15 @@ int main() {
   scanf("%d", &qtdAlunos);
 
   ler_estudantes(qtdAlunos, Estudantes);
-
   scanf(" %c", &opcao);
   scanf("%d", &qtdBuscas);
 
-  quicksort(0, qtdAlunos - 1, Estudantes, opcao);
+  ordenaEstudantes(Estudantes, qtdAlunos, opcao);
+  // quicksort(0, qtdAlunos - 1, Estudantes, opcao);
+  // int a = buscaNome(Estudantes, qtdAlunos, "jorge");
+  // printf("%i", a);
+  // printf("\n");
+  // imprimeEstudante(Estudantes, a);
   imprimeEstudantes(Estudantes, qtdAlunos);
 
   return 0;
