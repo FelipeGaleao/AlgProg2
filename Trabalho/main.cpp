@@ -62,6 +62,18 @@ void troca(Estudante &a, Estudante &b) {
   b = tmp;
 }
 
+int strcmp(char a, char b) {
+  if (a > b) {
+    return -1;
+  }
+  if (a == b) {
+    return 0;
+  }
+  if (a <= b) {
+    return 1;
+  }
+}
+
 int separa(int p, int r, Estudante v[MAX], char opcao) {
 
   char pivot;
@@ -90,35 +102,14 @@ int separa(int p, int r, Estudante v[MAX], char opcao) {
 
     if (opcao == 'n') {
       int k;
-      for (k = 0;
-           v[i].nome[k] == pivotEstudante.nome[k] && v[i].nome[k] == '\0'; k++)
-        ;
-
-      if (v[i].nome[k] <= pivotEstudante.nome[k]) {
-        troca(v[i], v[q]);
-        q++;
-        // troca(v[i], v[q]);
-        // printf("\n str1 is Less than str2");
-      } else if (v[i].nome[k] > pivotEstudante.nome[k]) {
-        // troca(v[q], v[i]);
-        // q++;
-        // troca(v[i], v[q]);
-      } else {
-        // printf("\n str1 is Equal to str2");
+      for (k = 0; v[i].nome[k] == pivotEstudante.nome[k]; k++);
+      int vl = strcmp(v[i].nome[k], pivotEstudante.nome[k]);
+      if (vl == 1) {
+          troca(v[i], v[q]);
+          q++;
       }
-
-      // if (v[i].nome[0] <= pivotEstudante.nome[0]) {
-      //   troca(v[i], v[q]);
-      //   q++;
-      // }
-      // if (v[i].nome[0] == pivotEstudante.nome[0]) {
-      // if (v[i].nome < pivotEstudante.nome) {
-      //   printf("teste");
-      //   troca(v[i], v[q]);
-      //   q++;
-      // }
+  
     }
-    // }
     if (opcao == 'm') {
       if (v[i].media <= pivotMedia) {
         troca(v[i], v[q]);
@@ -132,18 +123,7 @@ int separa(int p, int r, Estudante v[MAX], char opcao) {
 void quicksort(int p, int r, Estudante v[MAX], char opcao) {
   int q;
   if (p < r) {
-    if (opcao == 'n') {
-      q = separa(p, r, v, opcao);
-      // q = separa(p, r, v, opcao);
-      // q = separa(p, r, v, opcao);
-      // q = separa(p, r, v, opcao);
-
-    } else {
-      q = separa(p, r, v, opcao);
-      q = separa(p, r, v, opcao);
-    }
-    // q = separa(p, r, v, opcao);
-    // q = separa(p, r, v, opcao);
+    q = separa(p, r, v, opcao);
     quicksort(p, q - 1, v, opcao);
     quicksort(q + 1, r, v, opcao);
   }
