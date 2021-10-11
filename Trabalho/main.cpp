@@ -23,18 +23,53 @@ int buscaRGA(Estudante v[], int n, int RGA) {
   return dir;
 }
 
-int buscaNome(Estudante v[], int n, char nome[]) {
+/* Função para verificar se os nomes são iguais.
+  char palavra[MAX] => palavra a ser comparada 1;
+  char palavra_buscada[MAX] => palavra a ser comparada 2;
+
+  Compara as duas palavras, caso for igual retorna 1, se não, verifica se é
+  maior, se for retorna -1, se não for retorna 0
+
+  */
+
+int check_nome(char palavra[MAX], char palavra_buscada[MAX]) {
+  int i;
+
+  for (i = 0; palavra[i] == palavra_buscada[i]; i++)
+    if (palavra[i] == '\0')
+      return 1;
+  if (palavra[i] > palavra_buscada[i])
+    return -1;
+  if (palavra[i] < palavra_buscada[i])
+    return 0;
+}
+
+/* Função para comparar duas strings e definir qual é maior que a outra */
+
+int strcmp(char a, char b) {
+  if (a > b) {
+    return -1;
+  }
+  if (a == b) {
+    return 0;
+  }
+  if (a <= b) {
+    return 1;
+  }
+}
+
+int buscaNome(Estudante v[], int n, char nome[MAX]) {
   int inicio = 0;
   int fim = n - 1;
   int meio;
   int j = 0;
   while (inicio <= fim) {
     meio = (inicio + fim) / 2;
-    if (nome[j] == v[meio].nome[j])
+    if (check_nome(nome, v[meio].nome) == 1)
       return meio;
-    else if (nome[j] < v[meio].nome[j])
+    else if ((check_nome(nome, v[meio].nome) == 0))
       fim = meio - 1;
-    else if (nome[j] > v[meio].nome[j])
+    else if ((check_nome(nome, v[meio].nome) == -1))
       inicio = meio + 1;
   }
   return -1;
@@ -60,18 +95,6 @@ void troca(Estudante &a, Estudante &b) {
   Estudante tmp = a;
   a = b;
   b = tmp;
-}
-
-int strcmp(char a, char b) {
-  if (a > b) {
-    return -1;
-  }
-  if (a == b) {
-    return 0;
-  }
-  if (a <= b) {
-    return 1;
-  }
 }
 
 int separa(int p, int r, Estudante v[MAX], char opcao) {
@@ -102,13 +125,13 @@ int separa(int p, int r, Estudante v[MAX], char opcao) {
 
     if (opcao == 'n') {
       int k;
-      for (k = 0; v[i].nome[k] == pivotEstudante.nome[k]; k++);
+      for (k = 0; v[i].nome[k] == pivotEstudante.nome[k]; k++)
+        ;
       int vl = strcmp(v[i].nome[k], pivotEstudante.nome[k]);
       if (vl == 1) {
-          troca(v[i], v[q]);
-          q++;
+        troca(v[i], v[q]);
+        q++;
       }
-  
     }
     if (opcao == 'm') {
       if (v[i].media <= pivotMedia) {
@@ -162,24 +185,63 @@ void ordenaEstudantes(Estudante v[], int n, char op) {
   quicksort(0, n - 1, v, op);
 }
 
+void buscarEstudantes(char opcao, char nomeBusca[10000][MAX],
+                      int rgaBusca[10000], float mediaBusca[10000],
+                      int qtdBuscas, Estudante Estudantes[MAX], int qtdAlunos) {
+
+  if (opcao == 'n') {
+    for (int i = 0; i < qtdBuscas; i++) {
+      scanf("%s", nomeBusca[i]);
+    }
+  }
+
+  if (opcao == 'r') {
+    for (int i = 0; i < qtdBuscas; i++) {
+      scanf("%d", &rgaBusca[i]);
+    }
+  }
+  if (opcao == 'm') {
+    for (int i = 0; i < qtdBuscas; i++) {
+      scanf("%lf", &mediaBusca[i]);
+    }
+  }
+
+  for (int i = 0; i < qtdBuscas; i++) {
+    int vlrBusca;
+    if (opcao == 'n')
+      vlrBusca = buscaNome(Estudantes, qtdAlunos, nomeBusca[i]);
+
+    if (opcao == 'r')
+      vlrBusca = buscaRGA(Estudantes, qtdAlunos, rgaBusca[i]);
+
+    if (opcao == 'm')
+      vlrBusca = buscaMedia(Estudantes, qtdAlunos, mediaBusca[i]);
+
+    imprimeEstudante(Estudantes, vlrBusca);
+  }
+}
+
 int main() {
 
   int qtdAlunos, qtdBuscas;
   char opcao;
+  char nomeBusca[10000][MAX];
+  int rgaBusca[10000];
+  float mediaBusca[10000];
+
   Estudante Estudantes[MAX];
 
   scanf("%d", &qtdAlunos);
 
   ler_estudantes(qtdAlunos, Estudantes);
+
   scanf(" %c", &opcao);
   scanf("%d", &qtdBuscas);
 
   ordenaEstudantes(Estudantes, qtdAlunos, opcao);
-  // quicksort(0, qtdAlunos - 1, Estudantes, opcao);
-  // int a = buscaNome(Estudantes, qtdAlunos, "jorge");
-  // printf("%i", a);
-  // printf("\n");
-  // imprimeEstudante(Estudantes, a);
+
+  buscarEstudantes(opcao, nomeBusca, rgaBusca, mediaBusca, qtdBuscas, Estudantes, qtdAlunos);
+  
   imprimeEstudantes(Estudantes, qtdAlunos);
 
   return 0;
