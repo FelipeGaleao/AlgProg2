@@ -1,12 +1,13 @@
 #include <stdio.h>
 #define MAX 100
 
+/* Criação da estrutura de registro para Estudante */
+
 struct Estudante {
   int RGA;
   char nome[100];
   float media;
 } Estudantes;
-
 
 /* Função para verificar se os nomes são iguais.
   char palavra[MAX] => palavra a ser comparada 1;
@@ -42,7 +43,6 @@ int strcmp(char a, char b) {
     return 1;
   }
 }
-
 
 /* Buscas */
 
@@ -95,6 +95,8 @@ int buscaMedia(Estudante v[], int n, double media) {
   }
   return -1;
 }
+
+/* Métodos para ordenação */
 
 void troca(Estudante &a, Estudante &b) {
   Estudante tmp = a;
@@ -158,6 +160,12 @@ void quicksort(int p, int r, Estudante v[MAX], char opcao) {
   }
 }
 
+void ordenaEstudantes(Estudante v[], int n, char op) {
+  quicksort(0, n - 1, v, op);
+}
+
+/* Funções para impressão e leituras do estudante */
+
 void imprimeEstudante(Estudante v[], int k) {
   if (k < 0) {
     printf("RGA: null \n");
@@ -189,9 +197,7 @@ void ler_estudantes(int qtdAlunos, Estudante Estudantes[MAX]) {
   }
 }
 
-void ordenaEstudantes(Estudante v[], int n, char op) {
-  quicksort(0, n - 1, v, op);
-}
+/* Funções para buscar um estudante */
 
 void buscarEstudantes(char opcao, char nomeBusca[10000][MAX],
                       int rgaBusca[10000], float mediaBusca[10000],
