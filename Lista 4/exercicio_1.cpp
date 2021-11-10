@@ -5,7 +5,7 @@ void percorreVetor(int n, int *p, int k) {
   int i;
 
   for (i = 0; i < n; i++) {
-    if (*p % k != 0) {
+    if (i % k != 0) {
       *p = *p / 2;
     }
     if (i < n - 1)
