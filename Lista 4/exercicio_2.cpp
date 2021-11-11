@@ -1,13 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
 int main() {
 
   int n;
-
-  bool matriz_quadrada;
 
   scanf("%d", &n);
 
@@ -71,6 +67,6 @@ int main() {
     }else{
         printf("Nao!");
     }
-
+    
   return 0;
 }
