@@ -67,6 +67,10 @@ int main() {
     }else{
         printf("Nao!");
     }
-    
+  delete [] cubo_magico;
+  delete [] soma_linha;
+  delete [] soma_coluna;
+
+
   return 0;
 }

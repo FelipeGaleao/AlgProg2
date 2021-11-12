@@ -32,5 +32,7 @@ int main() {
 
   percorreVetor(n, vetorPont, k);
 
+  delete [] vetorPont;
+
   return 0;
 }

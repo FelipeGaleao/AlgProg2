@@ -44,5 +44,8 @@ for (i = 0; i <= n - 1; i++) {
     printf("Ok!");
   }
 
+    free(vetor);
+    
+
     return 0;
 }
