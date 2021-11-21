@@ -34,13 +34,17 @@ Pessoa *buscaCPF(Pessoa *lst, int cpf) {
 }
 
 void insere(Pessoa *lst, char *nome, int cpf) {
+
   Pessoa *nova;
+
   nova = (Pessoa *)malloc(sizeof(Pessoa));
   strcpy(nova->nome, nome);
   nova->cpf = cpf;
   nova->nDoses = 0;
   nova->prox = lst->prox;
+
   lst->prox = nova;
+    
 }
 
 //   ======================> REMOÇÃO <======================
@@ -61,6 +65,7 @@ void imprimePessoa(Pessoa *p) {
   printf("------------\nPessoa de nome: %s \nCPF: %d\nNum . de doses aplicadas "
          ": %d \n------------\n",
          pessoa->nome, pessoa->cpf, pessoa->nDoses);
+  free(pessoa);
 }
 
 void imprimeLista(Pessoa *lst) {
@@ -71,18 +76,23 @@ void imprimeLista(Pessoa *lst) {
     printf("------------\nPessoa de nome: %s \nCPF: %d\nNum . de doses "
            "aplicadas : %d \n------------\n",
            p->nome, p->cpf, p->nDoses);
+
+  free(p);
+
 }
 
 //   ======================> Limpar Listas <======================
 
-void limpaLista(Pessoa **lst) {}
+void limpaLista(Pessoa *lst) { free(lst); }
 
 int main() {
   int n;
   scanf("%d", &n);
   char nome_pessoa[101];
+  char op;
+  char op2;
   int cpf;
-
+  int finaliza = 0;
   Pessoa *lst;
 
   lst = (Pessoa *)malloc(sizeof(Pessoa));
@@ -93,10 +103,19 @@ int main() {
     scanf("%d", &cpf);
     insere(lst, nome_pessoa, cpf);
   }
+  // while (finaliza != 1) {
+  //   scanf(" %c", &op);
+  //   scanf(" %c", &op2);
+  //   printf("%c %c", op, op2);
 
-  // imprimeLista(lst->prox);
-  cpf = 78910;
-  imprimePessoa(buscaCPF(lst, cpf));
+    void (*pf) (Pessoa *p);
+    pf = imprimePessoa;
+    (*pf)(buscaCPF(lst, 112));
+    
+  // }
+
+  imprimePessoa(buscaCPF(lst, 112));
+  limpaLista(lst);
 
   return 0;
 }
