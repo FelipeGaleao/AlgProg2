@@ -64,8 +64,6 @@ bool removePorNome(Pessoa *lst, char *nome) {
     return true;
   }
   
-  free(aux);
-  free(nova);
 
   return false;
 }
@@ -85,8 +83,6 @@ bool removePorCPF(Pessoa *lst, int cpf) {
     free(aux);
     return true;
   }
-  free(aux);
-  free(nova);
   return false;
 }
 
@@ -114,10 +110,8 @@ bool incrementaDosesPorCPF(Pessoa *lst, int cpf) {
   if (pessoa != NULL && pessoa->nDoses < 2) {
     pessoa->nDoses++;
     return true;
-  } else {
-    return false;
-  }
-  free(pessoa);
+  } 
+  return false;
 }
 
 //   ======================> IMPRESSÃO <======================
