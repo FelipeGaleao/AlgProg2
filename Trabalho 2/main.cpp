@@ -63,6 +63,10 @@ bool removePorNome(Pessoa *lst, char *nome) {
     free(aux);
     return true;
   }
+  
+  free(aux);
+  free(nova);
+
   return false;
 }
 
@@ -81,6 +85,8 @@ bool removePorCPF(Pessoa *lst, int cpf) {
     free(aux);
     return true;
   }
+  free(aux);
+  free(nova);
   return false;
 }
 
@@ -95,6 +101,9 @@ bool IncrementaDosesPorNome(Pessoa *lst, char *nome) {
     pessoa->nDoses++;
     return true;
   }
+
+  free(pessoa);
+
   return false;
 }
 bool incrementaDosesPorCPF(Pessoa *lst, int cpf) {
@@ -108,6 +117,7 @@ bool incrementaDosesPorCPF(Pessoa *lst, int cpf) {
   } else {
     return false;
   }
+  free(pessoa);
 }
 
 //   ======================> IMPRESSÃO <======================
@@ -115,6 +125,7 @@ bool incrementaDosesPorCPF(Pessoa *lst, int cpf) {
 void imprimePessoa(Pessoa *p) {
   Pessoa *pessoa;
   pessoa = p;
+
   if(p->nome != NULL){
   printf("------------\nPessoa de nome: %s \nCPF: %d\nNum. de doses aplicadas"
          ": %d \n------------\n",
@@ -133,6 +144,7 @@ void imprimeLista(Pessoa *lst) {
     printf("------------\nPessoa de nome: %s \nCPF: %d\nNum. de doses "
            "aplicadas: %d \n------------\n",
            p->nome, p->cpf, p->nDoses);
+
 }
 
 //   ======================> Limpar Listas <======================
@@ -248,5 +260,6 @@ int main() {
     }
   }
     imprimeLista(lst);
+    limpaLista(&lst);
   return 0;
 }
